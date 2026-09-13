@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHEVIBES | AI-Powered Safety & Route Intelligence</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(18, 24, 38, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-pink {
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="glass-panel sticky top-0 z-50 px-6 py-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">SHEVIBES</span>
+                <span class="text-xs bg-pink-500/10 text-pink-400 px-2.5 py-0.5 rounded-full border border-pink-500/20 font-medium">Prototype v1.0</span>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-2 rounded-lg text-sm border border-slate-700 transition">
+                    <i data-lucide="satellite" class="w-4 h-4 text-purple-400"></i>
+                    <span>Satellite Sync: Active</span>
+                </button>
+                <button onclick="triggerSOS()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg text-sm transition flex items-center space-x-2 glow-pink">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                    <span>SOS Emergency</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Body -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls & Safety Index (4 cols) -->
+        <section class="lg:col-span-4 space-y-6">
+            <!-- Route Input Card -->
+            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
+                <h2 class="text-lg font-semibold flex items-center space-x-2">
+                    <i data-lucide="navigation" class="w-5 h-5 text-pink-400"></i>
+                    <span>Route Safety Evaluator</span>
+                </h2>
+                
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-xs font-medium text-slate-400">Current Location</label>
+                        <div class="flex items-center bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 mt-1">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-pink-500 mr-2"></i>
+                            <input type="text" value="Connaught Place, New Delhi" class="bg-transparent text-sm w-full focus:outline-none text-slate-200">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium text-slate-400">Destination</label>
+                        <div class="flex items-center bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 mt-1">
+                            <i data-lucide="flag" class="w-4 h-4 text-purple-400 mr-2"></i>
+                            <input type="text" value="Hauz Khas Village, New Delhi" class="bg-transparent text-sm w-full focus:outline-none text-slate-200">
+                        </div>
+                    </div>
+                    <button onclick="calculateRoute()" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-95 text-white font-medium py-2.5 rounded-lg text-sm shadow-md transition">
+                        Analyze Safe Routes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Real-Time Metrics Widget -->
+            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
+                <h2 class="text-lg font-semibold flex items-center justify-between">
+                    <span>Route Safety Score</span>
+                    <span id="safety-score" class="text-2xl font-bold text-emerald-400">88/100</span>
+                </h2>
+                
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Street Lighting (Satellite Nightlights)</span>
+                            <span class="text-slate-200">High (92%)</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-emerald-400 h-full w-[92%]"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Crowdsourced Safety Reports</span>
+                            <span class="text-slate-200">Optimal</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-blue-400 h-full w-[85%]"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Active Transit / Open Businesses</span>
+                            <span class="text-slate-200">Moderate</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-yellow-400 h-full w-[65%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crowdsource Action Buttons -->
+            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                <h3 class="text-sm font-semibold text-slate-300">Crowdsource Incident Report</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="addReport('Poor Lighting')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-2.5 rounded-lg text-xs text-slate-300 flex items-center space-x-2">
+                        <i data-lucide="moon" class="w-4 h-4 text-yellow-400"></i>
+                        <span>Dim Lighting</span>
+                    </button>
+                    <button onclick="addReport('Isolated Area')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-2.5 rounded-lg text-xs text-slate-300 flex items-center space-x-2">
+                        <i data-lucide="user-x" class="w-4 h-4 text-red-400"></i>
+                        <span>Isolated Area</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Side Map & Live Intelligence Feed (8 cols) -->
+        <section class="lg:col-span-8 flex flex-col space-y-6">
+            <!-- Simulated Map Canvas Container -->
+            <div class="glass-panel rounded-2xl border border-slate-800 h-96 relative overflow-hidden flex flex-col justify-between p-6">
+                <!-- Map Background Representation -->
+                <div class="absolute inset-0 bg-slate-900 opacity-60 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                
+                <!-- Map Header Overlay -->
+                <div class="relative z-10 flex justify-between items-center">
+                    <div class="bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="text-slate-300">Live Satellite Data Layer Overlay</span>
+                    </div>
+                    <div class="flex space-x-2">
+                        <span class="bg-slate-900 text-slate-300 text-xs px-2.5 py-1 rounded border border-slate-800">VIIRS Nightlight Data</span>
+                        <span class="bg-slate-900 text-slate-300 text-xs px-2.5 py-1 rounded border border-slate-800">OpenStreetMap</span>
+                    </div>
+                </div>
+
+                <!-- Center Interactive Mock Map Content -->
+                <div class="relative z-10 my-auto text-center space-y-2">
+                    <div class="inline-flex p-3 rounded-full bg-pink-500/10 border border-pink-500/20 mb-2">
+                        <i data-lucide="map" class="w-8 h-8 text-pink-400"></i>
+                    </div>
+                    <p class="text-sm font-medium text-slate-200">Recommended Route: Outer Ring Road via AI Safety Path</p>
+                    <p class="text-xs text-slate-400">Avoids 2 low-visibility areas near Green Park underpasses.</p>
+                </div>
+
+                <!-- Map Footer Overlay -->
+                <div class="relative z-10 flex justify-between items-center text-xs text-slate-400">
+                    <span>ETA: 24 mins • 12.4 km</span>
+                    <span class="text-emerald-400 font-medium">Safest Choice (+12% score vs shortest route)</span>
+                </div>
+            </div>
+
+            <!-- Live Safety Feeds & Activity Logs -->
+            <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
+                <h3 class="text-sm font-semibold text-slate-200 flex items-center justify-between">
+                    <span>Live Community & Sensor Updates</span>
+                    <i data-lucide="activity" class="w-4 h-4 text-pink-400"></i>
+                </h3>
+
+                <div id="activity-feed" class="space-y-3">
+                    <div class="flex items-start justify-between text-xs p-3 rounded-lg bg-slate-900/60 border border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                            <div>
+                                <p class="text-slate-200 font-medium">High patrol density verified</p>
+                                <p class="text-slate-400">Hauz Khas Metro Station area • 5 mins ago</p>
+                            </div>
+                        </div>
+                        <span class="text-slate-500">Verified</span>
+                    </div>
+
+                    <div class="flex items-start justify-between text-xs p-3 rounded-lg bg-slate-900/60 border border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="alert-circle" class="w-4 h-4 text-yellow-400"></i>
+                            <div>
+                                <p class="text-slate-200 font-medium">Streetlight malfunction reported</p>
+                                <p class="text-slate-400">Sector 4 Service Lane • 18 mins ago</p>
+                            </div>
+                        </div>
+                        <span class="text-slate-500">Crowdsourced</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-4 px-6 text-center text-xs text-slate-500 mt-auto">
+        SHEVIBES Prototype • Built for Vercel Single-File Deployment
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        lucide.createIcons();
+
+        function triggerSOS() {
+            alert("Emergency SOS Alert Broadcasted to Emergency Contacts & Nearest Authorities!");
+        }
+
+        function calculateRoute() {
+            const score = document.getElementById('safety-score');
+            score.innerText = "94/100";
+            score.className = "text-2xl font-bold text-emerald-400 animate-pulse";
+            setTimeout(() => { score.classList.remove('animate-pulse'); }, 1000);
+            
+            const feed = document.getElementById('activity-feed');
+            const newEntry = document.createElement('div');
+            newEntry.className = "flex items-start justify-between text-xs p-3 rounded-lg bg-slate-900/60 border border-slate-800";
+            newEntry.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-pink-400"></i>
+                    <div>
+                        <p class="text-slate-200 font-medium">New AI Route Calculated</p>
+                        <p class="text-slate-400">Optimized for lighting & verified safe zones</p>
+                    </div>
+                </div>
+                <span class="text-pink-400">Just now</span>
+            `;
+            feed.prepend(newEntry);
+            lucide.createIcons();
+        }
+
+        function addReport(type) {
+            const feed = document.getElementById('activity-feed');
+            const newEntry = document.createElement('div');
+            newEntry.className = "flex items-start justify-between text-xs p-3 rounded-lg bg-slate-900/60 border border-slate-800";
+            newEntry.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="flag" class="w-4 h-4 text-yellow-400"></i>
+                    <div>
+                        <p class="text-slate-200 font-medium">Report logged: ${type}</p>
+                        <p class="text-slate-400">Location added to community heat-map</p>
+                    </div>
+                </div>
+                <span class="text-yellow-400">Just now</span>
+            `;
+            feed.prepend(newEntry);
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
